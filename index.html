@@ -4,6 +4,14 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Calculator App</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&display=swap"
+            rel="stylesheet"
+        />
+
         <link rel="stylesheet" href="style.css" />
     </head>
     <body>
@@ -11,35 +19,43 @@
             <div class="calc">
                 <header class="calc__header">
                     <h1 class="calc__title">
+                        <svg
+                            class="calc__title-svg"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                d="M13 24h6a5 5 0 0 0 5-5v-6H13v11zm3-7h5v1h-5v-1zm0 2h5v1h-5v-1zM0 19a5 5 0 0 0 5 5h6V13H0v6zm3-1h2v-2h1v2h2v1H6v2H5v-2H3v-1zM19 0h-6v11h11V5a5 5 0 0 0-5-5zm-.5 3a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm0 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zM21 6h-5V5h5v1zM0 5v6h11V0H5a5 5 0 0 0-5 5zm7-1.6.6.7-1.4 1.4 1.4 1.4-.7.7-1.4-1.4-1.4 1.4-.7-.7 1.4-1.4-1.4-1.4.7-.7 1.4 1.4 1.4-1.4z"
+                            />
+                        </svg>
                         Calculator
                     </h1>
                 </header>
                 <div class="calc__screen">
-                    <span class="calc__memory">
-
-                    </span>
-                    <input type="text" class="calc__input">
+                    <span class="calc__memory"> </span>
+                    <input type="text" class="calc__input" value="0" />
                 </div>
                 <div class="calc__buttons">
+                    <button class="calc__button">CE</button>
+                    <button class="calc__button">C</button>
+                    <button class="calc__button">%</button>
+                    <button class="calc__button">Del</button>
                     <button class="calc__button">7</button>
                     <button class="calc__button">8</button>
                     <button class="calc__button">9</button>
-                    <button class="calc__button">Del</button>
+                    <button class="calc__button">+</button>
                     <button class="calc__button">4</button>
                     <button class="calc__button">5</button>
                     <button class="calc__button">6</button>
-                    <button class="calc__button">+</button>
+                    <button class="calc__button">-</button>
                     <button class="calc__button">1</button>
                     <button class="calc__button">2</button>
                     <button class="calc__button">3</button>
-                    <button class="calc__button">-</button>
+                    <button class="calc__button">×</button>
                     <button class="calc__button">.</button>
                     <button class="calc__button">0</button>
                     <button class="calc__button">/</button>
-                    <button class="calc__button">CE</button>
-                    <button class="calc__button">C</button>
                     <button class="calc__button">=</button>
-                    <button class="calc__button">%</button>
                 </div>
             </div>
         </div>

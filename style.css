@@ -1,0 +1,127 @@
+
+:root {
+    --main-dark-color: rgba(16,41,80,1);
+    --main-light-color: rgba(94,125,175,1);
+}
+
+/* Reste CSS */
+
+* {
+    padding: 0;
+    margin: 0;
+    font: inherit;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+}
+
+a {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+}
+
+input {
+    outline: none;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+html {
+    font-size: 10px;
+}
+
+body {
+    font-size: 1.6rem;
+    font-family: 'League Spartan', sans-serif;
+}
+
+.container {
+    min-height: 100vh;
+    background: radial-gradient(circle, var(--main-light-color) 0%, rgba(45,87,153,1) 50%, var(--main-dark-color) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Calc */
+
+.calc {
+    width: 100%;
+    max-width: 45rem;
+    background-color: var(--main-light-color);
+    padding: 2rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.calc__title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    font-size: 3rem;
+    color: white;
+}
+
+.calc__title-svg {
+    width: 3rem;
+    height: 3rem;
+    fill: white;
+}
+
+.calc__screen {
+    background-color: var(--main-dark-color);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.calc__memory {
+    font-size: 1.75rem;
+    color: #ffffff73;
+    height: 2.1rem;
+    text-align: right;
+}
+
+.calc__input {
+    font-size: 4.5rem;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-weight: bold;
+    text-align: right;
+}
+
+.calc__buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    background-color: var(--main-dark-color);
+    padding: 2rem;
+    border-radius: 0.5rem;
+}
+
+.calc__button {
+    font-size: 2.5rem;
+    color: var(--main-dark-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 0.3rem;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4), 0px 7px 13px -3px rgba(0, 0, 0, 0.3), inset 0px -3px 0px rgba(0, 0, 0, 0.2);
+}
