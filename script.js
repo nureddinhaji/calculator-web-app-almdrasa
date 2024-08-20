@@ -34,6 +34,7 @@ const clickNumber = (value) => {
     } else if (afterEqual) {
         input.value = value;
         memory.textContent = "";
+        storedNumber = null;
         afterEqual = false;
     } else {
         input.value += value;
@@ -150,7 +151,6 @@ const getResult = () => {
 equalButton.addEventListener("click", () => {
     getResult();
     afterEqual = true;
-    storedNumber = null;
 })
 
 // -------------------------------
@@ -199,29 +199,5 @@ document.querySelector("button[data-type='clear-entry']").addEventListener("clic
 
 document.addEventListener("keydown", (event) => {
     const key = event.key;
-
-    if (!isNaN(key) || key === ".") {
-        clickNumber(key);
-    }
-
-    if (key === "+" || key === "-" || key === "*" || key === "/" || key === "%") {
-        clickOperation(key);
-    }
-
-    if (key === "Enter" || key === "=") {
-        getResult();
-        afterEqual = true;
-    }
-
-    if (key === "Backspace") {
-        deleteLastNo();
-    }
-
-    if (key === "Escape") {
-        clearAll();
-    }
-
-    if (key === "Delete") {
-        clear();
-    }
+    document.querySelector(`button[data-value="${key}"]`).click();
 });
