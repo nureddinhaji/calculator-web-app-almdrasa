@@ -3,7 +3,9 @@ const currentValue = 0;
 const resultValue = 0;
 let pointAdded = false;
 const noButtons = document.querySelectorAll("button[data-type='number']");
-const input = document.querySelector(".calc__input")
+const input = document.querySelector(".calc__input");
+const deleteLastButton = document.querySelector(".calc__button--del")
+
 
 const clickNumber = (button) => {
     const value = button.dataset.value;
@@ -19,8 +21,22 @@ const clickNumber = (button) => {
     }
 }
 
+const deleteLastNo = () => {
+    if(input.value === "0") {
+        return
+    } else if(input.value.length == 1) {
+        input.value = 0;
+        return
+    }
+    input.value = input.value.slice(0, -1);
+}
+
 noButtons.forEach(button => {
     button.addEventListener("click", () => {
         clickNumber(button)
     })
+})
+
+deleteLastButton.addEventListener("click", () => {
+    deleteLastNo();
 })
