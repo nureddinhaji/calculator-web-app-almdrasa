@@ -142,4 +142,18 @@ const clearAll = () => {
 
 document.querySelector("button[data-type='clear']").addEventListener("click", () => {
     clearAll();
-})
+});
+// -------------------------------
+
+
+
+// -------------------------------
+// Clear Entry Function
+// -------------------------------
+document.querySelector("button[data-type='clear-entry']").addEventListener("click", () => {
+    if(afterEqual) {
+        clearAll();
+    } else {
+        input.value = 0;
+    }
+});
