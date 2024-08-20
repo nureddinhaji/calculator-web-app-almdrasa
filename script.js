@@ -7,7 +7,6 @@ let afterOperationNumber = false;
 let afterOperationOperation = false;
 let afterEqual = false;
 
-let pointAdded = false;
 
 const noButtons = document.querySelectorAll("button[data-type='number']");
 const opButtons = document.querySelectorAll("button[data-type='operation']");
@@ -20,15 +19,12 @@ const equalButton = document.querySelector("button[data-type='equal']");
 // Click a Number Function
 // -------------------------------
 const clickNumber = (value) => {
-    if (value === "." && !pointAdded) {
-        input.value += value;
-        pointAdded = true;
-    } else if (
-        (value === "." && pointAdded) ||
+    if (
+        (value === "." && input.value.includes(".")) ||
         (value === "0" && input.value === "0")
     ) {
         return;
-    } else if (input.value === "0" || afterOperationNumber) {
+    } else if (input.value === "0" && value != "." || afterOperationNumber) {
         input.value = value;
         afterOperationNumber = false;
     } else if (afterEqual) {
@@ -51,8 +47,8 @@ noButtons.forEach((button) => {
 // -------------------------------
 
 const deleteLastNo = () => {
-    if(afterEqual) {
-        clearAll()
+    if (afterEqual) {
+        clearAll();
     } else {
         if (input.value.length > 1) {
             input.value = input.value.slice(0, -1);
@@ -60,13 +56,11 @@ const deleteLastNo = () => {
             input.value = "0";
         }
     }
-    pointAdded = input.value.includes(".");
 };
 
 deleteLastButton.addEventListener("click", deleteLastNo);
 
 // -------------------------------
-
 
 // -------------------------------
 // Operation Buttons Click Function
@@ -74,48 +68,52 @@ deleteLastButton.addEventListener("click", deleteLastNo);
 
 const clickOperation = (newOperation) => {
     storedOperation = operation;
-    if(!afterOperationNumber) {
-        if(afterOperationOperation) {
-            operation = storedOperation !== newOperation ? storedOperation : newOperation;
+    if (!afterOperationNumber) {
+        if (afterOperationOperation) {
+            operation =
+                storedOperation !== newOperation
+                    ? storedOperation
+                    : newOperation;
             getResult();
         }
 
         operation = newOperation;
         storedNumber = parseFloat(input.value);
-    
-        afterOperationNumber = true;
-        afterOperationOperation = true
-        addToMemory(storedNumber, operation)
-    } else {
-        addToMemory(storedNumber, operation)
-    }
 
-}
+        afterOperationNumber = true;
+        afterOperationOperation = true;
+        addToMemory(storedNumber, operation);
+    } else {
+        addToMemory(storedNumber, operation);
+    }
+};
 
 const addToMemory = (storedNumber, operation, currentNumber) => {
-    memory.textContent = `${storedNumber} ${operation} ${currentNumber?`${currentNumber} =`:""}`
-}
+    memory.textContent = `${storedNumber} ${operation} ${
+        currentNumber ? `${currentNumber} =` : ""
+    }`;
+};
 
 opButtons.forEach((button) => {
-    button.addEventListener("click", () => clickOperation(button.dataset.value))
-})
+    button.addEventListener("click", () =>
+        clickOperation(button.dataset.value)
+    );
+});
 
 // -------------------------------
-
 
 // -------------------------------
 // Equal Function
 // -------------------------------
 
 const getResult = () => {
-    
     if (storedNumber === null || operation === null) return;
-    if(!afterEqual) {
+    if (!afterEqual) {
         currentNumber = parseFloat(input.value);
     }
 
     let result;
-    switch(operation) {
+    switch (operation) {
         case "+":
             result = storedNumber + currentNumber;
             break;
@@ -139,23 +137,20 @@ const getResult = () => {
             return;
     }
 
-    input.value = result 
-    addToMemory(storedNumber, operation, currentNumber)
+    input.value = result;
+    addToMemory(storedNumber, operation, currentNumber);
     storedNumber = parseFloat(input.value);
-    if(afterOperationOperation) {
+    if (afterOperationOperation) {
         afterOperationOperation = false;
     }
-
-}
+};
 
 equalButton.addEventListener("click", () => {
     getResult();
     afterEqual = true;
-})
+});
 
 // -------------------------------
-
-
 
 // -------------------------------
 // Clear All Function
@@ -168,30 +163,28 @@ const clearAll = () => {
     input.value = 0;
     memory.textContent = "";
     afterEqual = false;
-    pointAdded = false;
-}
+};
 
-document.querySelector("button[data-type='clear']").addEventListener("click", () => clearAll());
+document
+    .querySelector("button[data-type='clear']")
+    .addEventListener("click", () => clearAll());
 // -------------------------------
-
-
 
 // -------------------------------
 // Clear Entry Function
 // -------------------------------
 const clear = () => {
-    if(afterEqual) {
+    if (afterEqual) {
         clearAll();
     } else {
         input.value = 0;
-        pointAdded = false;
     }
-}
+};
 
-document.querySelector("button[data-type='clear-entry']").addEventListener("click", () => clear());
+document
+    .querySelector("button[data-type='clear-entry']")
+    .addEventListener("click", () => clear());
 // -------------------------------
-
-
 
 // -------------------------------
 // Keyboard Accessibility
