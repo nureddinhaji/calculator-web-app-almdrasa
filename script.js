@@ -70,19 +70,9 @@ deleteLastButton.addEventListener("click", deleteLastNo);
 const clickOperation = (newOperation) => {
     storedOperation = operation;
     if(!afterOperationNumber) {
-        // if(afterOperationOperation && storedOperation == operation) {
-        //     currentNumber = parseFloat(input.value);
-        // }
         if(afterOperationOperation) {
-            if(storedOperation != newOperation) {
-                operation = storedOperation;
-            } else {
-                operation = newOperation;
-            }
+            operation = storedOperation !== newOperation ? storedOperation : newOperation;
             getResult();
-            if(storedOperation != newOperation) {
-                operation = newOperation;
-            }
         }
 
         operation = newOperation;
