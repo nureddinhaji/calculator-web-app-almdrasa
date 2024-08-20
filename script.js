@@ -50,10 +50,14 @@ noButtons.forEach((button) => {
 // -------------------------------
 
 const deleteLastNo = () => {
-    if (input.value.length > 1) {
-        input.value = input.value.slice(0, -1);
+    if(afterEqual) {
+        clearAll()
     } else {
-        input.value = "0";
+        if (input.value.length > 1) {
+            input.value = input.value.slice(0, -1);
+        } else {
+            input.value = "0";
+        }
     }
     pointAdded = input.value.includes(".");
 };
@@ -137,14 +141,16 @@ const getResult = () => {
     input.value = result 
     addToMemory(storedNumber, operation, currentNumber)
     storedNumber = parseFloat(input.value);
-    afterEqual = true;
     if(afterOperationOperation) {
         afterOperationOperation = false;
     }
 
 }
 
-equalButton.addEventListener("click", () => getResult())
+equalButton.addEventListener("click", () => {
+    getResult();
+    afterEqual = true;
+})
 
 // -------------------------------
 
@@ -172,11 +178,49 @@ document.querySelector("button[data-type='clear']").addEventListener("click", ()
 // -------------------------------
 // Clear Entry Function
 // -------------------------------
-document.querySelector("button[data-type='clear-entry']").addEventListener("click", () => {
+const clear = () => {
     if(afterEqual) {
         clearAll();
     } else {
         input.value = 0;
         pointAdded = false;
+    }
+}
+
+document.querySelector("button[data-type='clear-entry']").addEventListener("click", () => clear());
+// -------------------------------
+
+
+
+// -------------------------------
+// Keyboard Accessibility
+// -------------------------------
+
+document.addEventListener("keydown", (event) => {
+    const key = event.key;
+
+    if (!isNaN(key) || key === ".") {
+        clickNumber(key);
+    }
+
+    if (key === "+" || key === "-" || key === "*" || key === "/" || key === "%") {
+        clickOperation(key);
+    }
+
+    if (key === "Enter" || key === "=") {
+        getResult();
+        afterEqual = true;
+    }
+
+    if (key === "Backspace") {
+        deleteLastNo();
+    }
+
+    if (key === "Escape") {
+        clearAll();
+    }
+
+    if (key === "Delete") {
+        clear();
     }
 });
