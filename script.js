@@ -150,6 +150,7 @@ const getResult = () => {
 equalButton.addEventListener("click", () => {
     getResult();
     afterEqual = true;
+    storedNumber = null;
 })
 
 // -------------------------------
