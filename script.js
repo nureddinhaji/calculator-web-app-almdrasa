@@ -1,13 +1,12 @@
 let storedNumber = null;
 let currentNumber = null;
 let operation = null;
-let storedOperation;
+let storedOperation = null;
 
 let afterOperationNumber = false;
 let afterOperationOperation = false;
 let afterEqual = false;
 
-const resultValue = 0;
 let pointAdded = false;
 
 const noButtons = document.querySelectorAll("button[data-type='number']");
@@ -51,10 +50,10 @@ noButtons.forEach((button) => {
 // -------------------------------
 
 const deleteLastNo = () => {
-    if (input.value === "0" || input.value.length == 1) {
-        input.value = 0;
-    } else {
+    if (input.value.length > 1) {
         input.value = input.value.slice(0, -1);
+    } else {
+        input.value = "0";
     }
     pointAdded = input.value.includes(".");
 };
