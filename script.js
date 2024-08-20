@@ -1,15 +1,17 @@
-let storedNumber = 0;
-let currentNumber = 0;
-let operation;
+let storedNumber = null;
+let currentNumber = null;
+let operation = null;
+let storedOperation;
 
-let afterOperation = false;
+let afterOperationNumber = false;
+let afterOperationOperation = false;
 let afterEqual = false;
 
 const resultValue = 0;
 let pointAdded = false;
+
 const noButtons = document.querySelectorAll("button[data-type='number']");
 const opButtons = document.querySelectorAll("button[data-type='operation']");
-
 const input = document.querySelector(".calc__input");
 const deleteLastButton = document.querySelector(".calc__button--del");
 const memory = document.querySelector(".calc__memory");
@@ -18,28 +20,30 @@ const equalButton = document.querySelector("button[data-type='equal']");
 // -------------------------------
 // Click a Number Function
 // -------------------------------
-const clickNumber = (button) => {
-    const value = button.dataset.value;
+const clickNumber = (value) => {
     if (value === "." && !pointAdded) {
-        input.value += button.dataset.value;
+        input.value += value;
         pointAdded = true;
     } else if (
         (value === "." && pointAdded) ||
         (value === "0" && input.value === "0")
     ) {
         return;
-    } else if (input.value === "0" || afterOperation) {
-        input.value = button.dataset.value;
-        afterOperation = false;
+    } else if (input.value === "0" || afterOperationNumber) {
+        input.value = value;
+        afterOperationNumber = false;
+    } else if (afterEqual) {
+        input.value = value;
+        memory.textContent = "";
+        afterEqual = false;
     } else {
-        input.value += button.dataset.value;
+        input.value += value;
     }
+    currentNumber = parseFloat(input.value);
 };
 
 noButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-        clickNumber(button);
-    });
+    button.addEventListener("click", () => clickNumber(button.dataset.value));
 });
 
 // -------------------------------
@@ -47,18 +51,15 @@ noButtons.forEach((button) => {
 // -------------------------------
 
 const deleteLastNo = () => {
-    if (input.value === "0") {
-        return;
-    } else if (input.value.length == 1) {
+    if (input.value === "0" || input.value.length == 1) {
         input.value = 0;
     } else {
         input.value = input.value.slice(0, -1);
     }
+    pointAdded = input.value.includes(".");
 };
 
-deleteLastButton.addEventListener("click", () => {
-    deleteLastNo();
-});
+deleteLastButton.addEventListener("click", deleteLastNo);
 
 // -------------------------------
 
@@ -67,13 +68,33 @@ deleteLastButton.addEventListener("click", () => {
 // Operation Buttons Click Function
 // -------------------------------
 
-const clickOperation = (button) => {
-    storedNumber = parseFloat(input.value);
-    operation = button.dataset.value;
+const clickOperation = (newOperation) => {
+    storedOperation = operation;
+    if(!afterOperationNumber) {
+        // if(afterOperationOperation && storedOperation == operation) {
+        //     currentNumber = parseFloat(input.value);
+        // }
+        if(afterOperationOperation) {
+            if(storedOperation != newOperation) {
+                operation = storedOperation;
+            } else {
+                operation = newOperation;
+            }
+            getResult();
+            if(storedOperation != newOperation) {
+                operation = newOperation;
+            }
+        }
 
-    addToMemory(storedNumber, operation)
-    console.log(storedNumber)
-    console.log(operation)
+        operation = newOperation;
+        storedNumber = parseFloat(input.value);
+    
+        afterOperationNumber = true;
+        afterOperationOperation = true
+        addToMemory(storedNumber, operation)
+    } else {
+        addToMemory(storedNumber, operation)
+    }
 
 }
 
@@ -82,10 +103,7 @@ const addToMemory = (storedNumber, operation, currentNumber) => {
 }
 
 opButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-        clickOperation(button);
-        afterOperation = true;
-    })
+    button.addEventListener("click", () => clickOperation(button.dataset.value))
 })
 
 // -------------------------------
@@ -97,32 +115,47 @@ opButtons.forEach((button) => {
 
 const getResult = () => {
     
-    let result;
-    if (operation === "+") {
-        result = storedNumber + currentNumber
-    } else if (operation === "-") {
-        result = storedNumber - currentNumber
-    } else if (operation === "*") {
-        result = storedNumber * currentNumber
-    } else if (operation === "/") {
-        result = storedNumber / currentNumber
-    } else if (operation === "%") {
-        result = storedNumber % currentNumber
-    }
-    input.value = result 
-
-    storedNumber = parseFloat(input.value);
-
-}
-
-equalButton.addEventListener("click", () => {
+    if (storedNumber === null || operation === null) return;
     if(!afterEqual) {
         currentNumber = parseFloat(input.value);
     }
+
+    let result;
+    switch(operation) {
+        case "+":
+            result = storedNumber + currentNumber;
+            break;
+        case "-":
+            result = storedNumber - currentNumber;
+            break;
+        case "*":
+            result = storedNumber * currentNumber;
+            break;
+        case "%":
+            result = storedNumber % currentNumber;
+            break;
+        case "/":
+            if (currentNumber == 0) {
+                result = "";
+                return;
+            }
+            result = storedNumber / currentNumber;
+            break;
+        default:
+            return;
+    }
+
+    input.value = result 
     addToMemory(storedNumber, operation, currentNumber)
-    getResult();
+    storedNumber = parseFloat(input.value);
     afterEqual = true;
-})
+    if(afterOperationOperation) {
+        afterOperationOperation = false;
+    }
+
+}
+
+equalButton.addEventListener("click", () => getResult())
 
 // -------------------------------
 
@@ -133,16 +166,16 @@ equalButton.addEventListener("click", () => {
 // -------------------------------
 
 const clearAll = () => {
-    storedNumber = 0;
-    currentNumber = 0;
+    storedNumber = null;
+    currentNumber = null;
+    operation = null;
     input.value = 0;
     memory.textContent = "";
     afterEqual = false;
+    pointAdded = false;
 }
 
-document.querySelector("button[data-type='clear']").addEventListener("click", () => {
-    clearAll();
-});
+document.querySelector("button[data-type='clear']").addEventListener("click", () => clearAll());
 // -------------------------------
 
 
@@ -155,5 +188,6 @@ document.querySelector("button[data-type='clear-entry']").addEventListener("clic
         clearAll();
     } else {
         input.value = 0;
+        pointAdded = false;
     }
 });
