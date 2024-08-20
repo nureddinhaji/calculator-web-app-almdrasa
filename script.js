@@ -112,7 +112,7 @@ const getResult = () => {
     input.value = result 
 
     storedNumber = parseFloat(input.value);
-    
+
 }
 
 equalButton.addEventListener("click", () => {
@@ -122,4 +122,24 @@ equalButton.addEventListener("click", () => {
     addToMemory(storedNumber, operation, currentNumber)
     getResult();
     afterEqual = true;
+})
+
+// -------------------------------
+
+
+
+// -------------------------------
+// Clear All Function
+// -------------------------------
+
+const clearAll = () => {
+    storedNumber = 0;
+    currentNumber = 0;
+    input.value = 0;
+    memory.textContent = "";
+    afterEqual = false;
+}
+
+document.querySelector("button[data-type='clear']").addEventListener("click", () => {
+    clearAll();
 })
