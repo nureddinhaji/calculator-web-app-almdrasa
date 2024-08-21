@@ -19,7 +19,7 @@ This is a simple yet functional calculator web application built using HTML, CSS
 
 ## Live Demo
 
-You can try out the calculator here: [Calculator Web App](https://nureddinhaji.github.io/calculator-web-app-almdrasa/)
+You can try out the calculator here: [Calculator Web App](https://nureddinhaji.github.io/calculator-web-app-javascript/)
 
 ## Screenshot
 
