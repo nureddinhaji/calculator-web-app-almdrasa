@@ -193,4 +193,5 @@ document
 document.addEventListener("keydown", (event) => {
     const key = event.key;
     document.querySelector(`button[data-value="${key}"]`).click();
+    document.querySelector(`button[data-value="${key}"]`).focus();
 });
